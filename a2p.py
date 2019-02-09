@@ -3,7 +3,7 @@
 
 #######################
 ####  LORIN SOURA #####
-####      &		  #####
+####      &       #####
 #### DEVLIN WYATT #####
 #######################
 
@@ -75,6 +75,22 @@ def writeOutput(D):
 data = {}
 
 D, N, data = parseFile("data_10k_100.tsv")
+
+
+#Need to create lists of data by collumns
+#this should count as transpose (turning a collumn into a row)
+#y wont change so we'll compute it first.
+y = []
+for i in range(N):
+	y.append(data[i]["label"])
+
+#this is where the main algorithm will start for Question 1
+x = [] 
+
+for i in range(N):
+	x.append(data[i]["fs"][0]) #This 0 will be 'j' in a loop once the algorithm is complete.
+
+
 writeOutput(D+1)
 
 
