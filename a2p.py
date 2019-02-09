@@ -23,12 +23,37 @@ def parseFile(filename):
 			
 	print("File parsed.")
 
-	return dic1
+	return D, N, dic1
+	
+def writeOutput(D):
+	print("Writing results to output.csv")
+
+	header = []
+	coefficients = [""]
+
+	for i in range(1, D):
+		header.append("w" + str(i))
+		coefficients.append("")
+	header.append("w0")
 	
 
+	h = "\t".join(header) + "\n"
+	c = "\t".join(coefficients)
+
+	#Has to be in tab format
+	# string \t string \t string \n
+	# string \t string \t string \n
+	f = open("output.csv", "w")
+	f.write(h+c)
+	#for i in range(D):
+		#f.write(header[i] + )
+	print("output.csv saved.")
 
 
-dic1 = {}
+data = {}
 
-dic1 = parseFile("data_10k_100.tsv")
+D, N, data = parseFile("data_10k_100.tsv")
+
+writeOutput(D)
+
 
