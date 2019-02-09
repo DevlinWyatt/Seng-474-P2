@@ -33,21 +33,18 @@ def writeOutput(D):
 
 	for i in range(1, D):
 		header.append("w" + str(i))
-		coefficients.append("")
+		coefficients.append("") #This needs actual data to append!
 	header.append("w0")
 	
 
 	h = "\t".join(header) + "\n"
 	c = "\t".join(coefficients)
 
-	#Has to be in tab format
-	# string \t string \t string \n
-	# string \t string \t string \n
-	f = open("output.csv", "w")
+	#Has to be in tsv format
+	f = open("output.tsv", "w")
 	f.write(h+c)
-	#for i in range(D):
-		#f.write(header[i] + )
-	print("output.csv saved.")
+	
+	print("output.tsv saved.")
 
 
 data = {}
