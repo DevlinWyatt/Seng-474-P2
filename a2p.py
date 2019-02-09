@@ -1,5 +1,17 @@
 #!/python3
 
+
+#######################
+####  LORIN SOURA #####
+####      &		  #####
+#### DEVLIN WYATT #####
+#######################
+
+
+####################
+#### Functions #####
+####################
+
 #Method used to Parse the file into a dictionary
 def parseFile(filename):
 	print("Parsing file")
@@ -22,9 +34,10 @@ def parseFile(filename):
 			dic1[i]["fs"].append(float(x[j+1]))
 			
 	print("File parsed.")
-
 	return D, N, dic1
-	
+
+
+#Used to write the output, still requires coefficient data.
 def writeOutput(D):
 	print("Writing results to output.csv")
 
@@ -43,14 +56,25 @@ def writeOutput(D):
 	#Has to be in tsv format
 	f = open("output.tsv", "w")
 	f.write(h+c)
-	
+
 	print("output.tsv saved.")
 
 
+###############
+#### MAIN #####
+###############
+#############
+###########
+#########
+#######
+#####
+####
+###
+##
+#
 data = {}
 
 D, N, data = parseFile("data_10k_100.tsv")
-
-writeOutput(D)
+writeOutput(D+1)
 
 
