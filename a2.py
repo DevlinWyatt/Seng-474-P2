@@ -4,7 +4,7 @@ import sys
 
 
 #######################
-####  LORIN SOURA #####
+#### LORIN SOURA  #####
 ####      &       #####
 #### DEVLIN WYATT #####
 #######################
@@ -16,7 +16,7 @@ import sys
 
 #Method used to Parse the file into a dictionary
 def parseFile(filename):
-   print("Parsing file...")
+   print("Parsing {}...".format(filename))
 
    f = open(filename)
 
@@ -35,7 +35,7 @@ def parseFile(filename):
       for j in range(D):
          dic1[i]["fs"].append(float(x[j+1]))
          
-   print("...File parsed.\n")
+   print("...{} parsed.\n".format(filename))
    return D, N, dic1
 
 
@@ -67,7 +67,7 @@ Question 1 is an algorithm that uses the normal equation to learn linear regress
 The normal Equation is W = (X^T * X)^-1 * X^T * Y
 And the linear regression hypothesis is h(x) = w^T * X
 '''
-def question1(N, D):
+def question1(N, D, data):
    print("Starting Question 1...")
    W = []
    #Need to create lists of data by collumns
@@ -108,7 +108,7 @@ def question1(N, D):
    return 
 
 
-def question2():
+def question2(N, D):
    return None
 
 
@@ -162,13 +162,16 @@ def question3_a(dictionaries,filename):
 #
 
 data = {}
-filename = "data_100k_300.tsv"
 
-D, N, data = parseFile(filename)
+filename1 = "data_10k_100.tsv"
+filename2 = "data_100k_300.tsv"
 
-question1(N, D)
+D1, N1, data1 = parseFile(filename1)
+D2, N2, data2 = parseFile(filename2)
 
-question2()
+question1(N2, D2, data2)
+
+question2(N1, D1)
 
 #question3_a(data,filename)
 
