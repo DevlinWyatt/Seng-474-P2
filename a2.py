@@ -16,7 +16,7 @@ import sys
 
 #Method used to Parse the file into a dictionary
 def parseFile(filename):
-   print("Parsing file")
+   print("Parsing file...")
 
    f = open(filename)
 
@@ -35,13 +35,13 @@ def parseFile(filename):
       for j in range(D):
          dic1[i]["fs"].append(float(x[j+1]))
          
-   print("File parsed.")
+   print("...File parsed.\n")
    return D, N, dic1
 
 
 #Used to write the output, still requires coefficient data.
 def writeOutput(D, W, filename):
-   print("Writing results to {}.csv".format(filename))
+   print("Writing results to {}.csv...".format(filename))
 
    header = []
    coefficients = []
@@ -59,7 +59,7 @@ def writeOutput(D, W, filename):
    f = open("{}.tsv".format(filename), "w")
    f.write(h+c)
 
-   print("{}.tsv saved.".format(filename))
+   print("...{}.tsv saved.\n".format(filename))
 
 
 '''
@@ -68,6 +68,7 @@ The normal Equation is W = (X^T * X)^-1 * X^T * Y
 And the linear regression hypothesis is h(x) = w^T * X
 '''
 def question1(N, D):
+   print("Starting Question 1...")
    W = []
    #Need to create lists of data by collumns
    #this should count as transpose (turning a collumn into a row)
@@ -81,7 +82,7 @@ def question1(N, D):
       x = [] 
 
       for i in range(N):
-         x.append(data[i]["fs"][j]) #This 0 will be 'j' in a loop once the algorithm is complete.
+         x.append(data[i]["fs"][j]) 
 
       #Need to calculate X^T * X, should give us one value.
       #should just be x_1^2 + x_2^2 + ... + x_n^2
@@ -97,7 +98,10 @@ def question1(N, D):
 
       w = p*l
 
+      #write all values of w to a list
       W.append(w)
+
+   print("...Finished Question 1.\n")
 
    writeOutput(D+1, W, "Q1")
 
@@ -158,7 +162,7 @@ def question3_a(dictionaries,filename):
 #
 
 data = {}
-filename = "data_10k_100.tsv"
+filename = "data_100k_300.tsv"
 
 D, N, data = parseFile(filename)
 
