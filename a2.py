@@ -27,7 +27,7 @@ def parseFile(filename):
    f.readline()
 
    dic1 = {}
-
+   '''
    for i in range(N):
       x = f.readline().rstrip().split('\t')
       dic1[i] = {"label": float(x[0]), "fs": []}
@@ -35,6 +35,14 @@ def parseFile(filename):
       for j in range(D):
          dic1[i]["fs"].append(float(x[j+1]))
          
+   '''
+   for i in range(N):
+      x = f.readline().rstrip().split('\t')
+      dic1[i] = {0: float(x[0]), 1: {}}
+
+      for j in range(D):
+         dic1[i][1].setdefault(j,[1,float(x[j+1])])
+
    print("...{} parsed.\n".format(filename))
    return D, N, dic1
 
@@ -75,26 +83,26 @@ def question1(N, D, data):
    #y wont change so we'll compute it first.
    y = []
    for i in range(N):
-      y.append(data[i]["label"])
+      y.append(data[i][0])
 
    #this is where the main algorithm will start for Question 1
    for j in range(D):
       x = [] 
 
       for i in range(N):
-         x.append(data[i]["fs"][j]) 
+         x.append(data[i][1][j]) 
 
       #Need to calculate X^T * X, should give us one value.
       #should just be x_1^2 + x_2^2 + ... + x_n^2
       p=0
       for i in x:
-         p = p + i*i
+         p = p + i[1]*i[1]
       p = 1/p
 
       #need to calculate X^T * Y which is X_1*Y_1 + X_2*Y_2 + ... + X_n*Y_n
       l=0
       for i in range(N):
-         l = l + x[i]*y[i] 
+         l = l + x[i][1]*y[i] 
 
       w = p*l
 
@@ -102,14 +110,16 @@ def question1(N, D, data):
       W.append(w)
 
    print("...Finished Question 1.\n")
-
    writeOutput(D+1, W, "Q1")
-
    return 
 
 
-def question2(N, D):
+def question2(N, D, data):
    return None
+
+
+def cost_function(feature_count, x, y):
+   return 0
 
 
 def question3_a(dictionaries,filename):
@@ -123,28 +133,26 @@ def question3_a(dictionaries,filename):
    N = int(f.readline().rstrip())
    # Get number of features
    D = int(f.readline().rstrip())
+   f.close() #-------------------------------------
    for counter, item in enumerate(dictionaries):
-      #feature_list = np.array(dictionaries[counter]['fs'])
-      #feature_ones = np.ones((feature_list.shape[0]))
-      #feature_matrix = np.c_[feature_list,feature_ones]
       # Generate a matrix where each data point is a 2D feature vector
-      fcounter = 0
-      feature_matrix = []
-      for count, feature in enumerate(dictionaries[counter]['fs'],0):
-         #sys.stdout.write(str(count) + ' ')
-         # insert a column of 1's as the first entry in the feature vector
-         feature_matrix.append([feature,1])  
-     
-      weight_matrix=np.random.uniform(size=(len(feature_matrix)-1))
-      print(weight_matrix)
-      # loss_function = 1/(2*N)*(y-wt*x)
+      Y = dictionaries[counter][0]
+
+      print(dictionaries[counter][1]) # feature_matrix with ones in first column 
+      # The feature set is a dictionary of int labels 0 to 99
+      # feature set dictionary contains a list [1, x-value]
+      # Access using dictionaries[counter][1]
+        
+  
+      # Get random weight for calculation  
+      # loss_function = 1/(2*N)*(y-wt*x) where N is the number of features.
  
-   # initialize weight matrix to have the same number of columns as 
-   # Loop until we reach T epochs OR loss is sufficently low OR
-      # Wgradient = evaluate_gradient(loss, data, W) using:
-         # loss function
-         # data
-         # weight matrix
+      # initialize weight matrix to have the same number of columns as 
+      # Loop until we reach T epochs OR loss is sufficently low OR
+         # Wgradient = evaluate_gradient(loss, data, W) using:
+            # loss function
+            # data
+            # weight matrix
       # W += -1 * learning_rate * Wgradient 
 
 
@@ -170,12 +178,15 @@ D1, N1, data1 = parseFile(filename1)
 D2, N2, data2 = parseFile(filename2)
 
 question1(N2, D2, data2)
+question2(N1, D1, data1)
 
-question2(N1, D1)
-
-#question3_a(data,filename)
-
-
+#question3_a(data1,filename1)
+#print(dic1[1])
 exit(0)
-#git clone https://github.com/DevlinWyatt/Seng-474-P2
-
+# git clone https://github.com/DevlinWyatt/Seng-474-P2
+# git init
+# git config user.name "someone"
+# git config user.email "someone@someplace.com"
+# git add *
+# git commit -m "some init msg"
+# git push
