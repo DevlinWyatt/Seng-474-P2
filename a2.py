@@ -2,31 +2,6 @@
 import numpy as np
 import sys
 
-#Method used to Parse the file into a dictionary of dictionaries
-def parseFile(filename):
-	print("Parsing file")
-
-	f = open(filename)
-   # Number of data points
-	N = int(f.readline().rstrip())
-   # Number of features
-	D = int(f.readline().rstrip())
-
-	#skip the header row
-	f.readline()
-
-	dic1 = {}
-	for i in range(N):
-		x = f.readline().rstrip().split('\t')
-		dic1[i] = {"label": x[0], "fs": []}
-
-		for j in range(D):
-			dic1[i]["fs"].append(float(x[j+1]))
-	print("File parsed.")
-	return dic1
-
-#!/python3
-
 
 #######################
 ####  LORIN SOURA #####
