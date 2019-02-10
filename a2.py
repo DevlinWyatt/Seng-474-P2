@@ -30,7 +30,7 @@ def parseFile(filename):
 
    for i in range(N):
       x = f.readline().rstrip().split('\t')
-      dic1[i] = {"label": x[0], "fs": []}
+      dic1[i] = {"label": float(x[0]), "fs": []}
 
       for j in range(D):
          dic1[i]["fs"].append(float(x[j+1]))
@@ -40,15 +40,15 @@ def parseFile(filename):
 
 
 #Used to write the output, still requires coefficient data.
-def writeOutput(D):
-   print("Writing results to output.csv")
+def writeOutput(D, W, filename):
+   print("Writing results to {}.csv".format(filename))
 
    header = []
-   coefficients = [""]
+   coefficients = []
 
    for i in range(1, D):
       header.append("w" + str(i))
-      coefficients.append("") #This needs actual data to append!
+      coefficients.append(str(W[i-1])) #This needs actual data to append!
    header.append("w0")
    
 
@@ -56,10 +56,56 @@ def writeOutput(D):
    c = "\t".join(coefficients)
 
    #Has to be in tsv format
-   f = open("output.tsv", "w")
+   f = open("{}.tsv".format(filename), "w")
    f.write(h+c)
 
-   print("output.tsv saved.")
+   print("{}.tsv saved.".format(filename))
+
+
+'''
+Question 1 is an algorithm that uses the normal equation to learn linear regression models.
+The normal Equation is W = (X^T * X)^-1 * X^T * Y
+And the linear regression hypothesis is h(x) = w^T * X
+'''
+def question1(N, D):
+   W = []
+   #Need to create lists of data by collumns
+   #this should count as transpose (turning a collumn into a row)
+   #y wont change so we'll compute it first.
+   y = []
+   for i in range(N):
+      y.append(data[i]["label"])
+
+   #this is where the main algorithm will start for Question 1
+   for j in range(D):
+      x = [] 
+
+      for i in range(N):
+         x.append(data[i]["fs"][j]) #This 0 will be 'j' in a loop once the algorithm is complete.
+
+      #Need to calculate X^T * X, should give us one value.
+      #should just be x_1^2 + x_2^2 + ... + x_n^2
+      p=0
+      for i in x:
+         p = p + i*i
+      p = 1/p
+
+      #need to calculate X^T * Y which is X_1*Y_1 + X_2*Y_2 + ... + X_n*Y_n
+      l=0
+      for i in range(N):
+         l = l + x[i]*y[i] 
+
+      w = p*l
+
+      W.append(w)
+
+   writeOutput(D+1, W, "Q1")
+
+   return 
+
+
+def question2():
+   return None
 
 
 def question3_a(dictionaries,filename):
@@ -116,24 +162,13 @@ filename = "data_10k_100.tsv"
 
 D, N, data = parseFile(filename)
 
+question1(N, D)
 
-#Need to create lists of data by collumns
-#this should count as transpose (turning a collumn into a row)
-#y wont change so we'll compute it first.
-y = []
-for i in range(N):
-   y.append(data[i]["label"])
+question2()
 
-#this is where the main algorithm will start for Question 1
-x = [] 
-for i in range(N):
-   x.append(data[i]["fs"][0]) #This 0 will be 'j' in a loop once the algorithm is complete.
+#question3_a(data,filename)
 
-
-writeOutput(D+1)
-
-question3_a(data,filename)
 
 exit(0)
-#git clonegit clone https://github.com/DevlinWyatt/Seng-474-P2
+#git clone https://github.com/DevlinWyatt/Seng-474-P2
 
