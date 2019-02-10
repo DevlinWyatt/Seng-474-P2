@@ -14,7 +14,7 @@ import sys
 #### Functions #####
 ####################
 
-#Method used to Parse the file into a dictionary
+#Method used to Parse the file into a dictionary and extract D & N
 def parseFile(filename):
    print("Parsing {}...".format(filename))
 
@@ -27,15 +27,7 @@ def parseFile(filename):
    f.readline()
 
    dic1 = {}
-   '''
-   for i in range(N):
-      x = f.readline().rstrip().split('\t')
-      dic1[i] = {"label": float(x[0]), "fs": []}
 
-      for j in range(D):
-         dic1[i]["fs"].append(float(x[j+1]))
-         
-   '''
    for i in range(N):
       x = f.readline().rstrip().split('\t')
       dic1[i] = {0: float(x[0]), 1: {}}
@@ -56,7 +48,7 @@ def writeOutput(D, W, filename):
 
    for i in range(1, D):
       header.append("w" + str(i))
-      coefficients.append(str(W[i-1])) #This needs actual data to append!
+      coefficients.append(str(W[i-1])) #data goes here
    header.append("w0")
    
 
@@ -65,18 +57,14 @@ def writeOutput(D, W, filename):
 
    #Has to be in tsv format
    f = open("{}.tsv".format(filename), "w")
-   f.write(h+c)
+   d = h+c
+   f.write(d)
 
    print("...{}.tsv saved.\n".format(filename))
 
+#used to calculate W
+def weights(N, D, data):
 
-'''
-Question 1 is an algorithm that uses the normal equation to learn linear regression models.
-The normal Equation is W = (X^T * X)^-1 * X^T * Y
-And the linear regression hypothesis is h(x) = w^T * X
-'''
-def question1(N, D, data):
-   print("Starting Question 1...")
    W = []
    #Need to create lists of data by collumns
    #this should count as transpose (turning a collumn into a row)
@@ -108,13 +96,44 @@ def question1(N, D, data):
 
       #write all values of w to a list
       W.append(w)
+   return W
+
+
+'''
+Question 1 is an algorithm that uses the normal equation to learn linear regression models.
+The normal Equation is W = (X^T * X)^-1 * X^T * Y
+And the linear regression hypothesis is h(x) = w^T * X
+'''
+def question1(N, D, data):
+   print("Starting Question 1...")
+   
+   W = weights(N, D, data)
 
    print("...Finished Question 1.\n")
    writeOutput(D+1, W, "Q1")
-   return 
+   return W
 
 
-def question2(N, D, data):
+'''
+Question 2 is on batch gradient descent.
+initialize w_0 randomly
+Equation is:
+  w[j] = w[j] + (nu/N)* (from i=1 to N)(y_i - ^y_i) * x_i[j]
+   where ^y_i = w^T * x_i
+'''
+def question2(N, D, W, data):
+   print("Starting Question 2...")
+
+   T = 200 #Epochs
+   nu = 0.000001 #learning rate
+
+   W = weights(N, D, data)
+
+   nu/N
+   for i in range(N):
+
+      continue
+
    return None
 
 
@@ -177,8 +196,14 @@ filename2 = "data_100k_300.tsv"
 D1, N1, data1 = parseFile(filename1)
 D2, N2, data2 = parseFile(filename2)
 
-question1(N2, D2, data2)
-question2(N1, D1, data1)
+W2 = question1(N2, D2, data2)
+W1 = weights(N1, D1, data1)
+
+question2(N1, D1, W1, data1)
+
+#question3(N1, D1, data1)
+#question3(N2, D2, data2)
+
 
 #question3_a(data1,filename1)
 #print(dic1[1])
