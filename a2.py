@@ -132,7 +132,7 @@ for i in range(N):
 
 writeOutput(D+1)
 
-question3_a(dic1,filename)
+question3_a(data,filename)
 
 exit(0)
 #git clonegit clone https://github.com/DevlinWyatt/Seng-474-P2
